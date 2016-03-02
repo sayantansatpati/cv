@@ -8,12 +8,12 @@ OPENCV_HOME = "/Users/ssatpati/anaconda/pkgs/opencv3-3.1.0-py27_0/share/OpenCV/h
 face_cascade = cv2.CascadeClassifier('{0}/haarcascade_frontalface_default.xml'.format(OPENCV_HOME))
 eye_cascade = cv2.CascadeClassifier('{0}/haarcascade_eye.xml'.format(OPENCV_HOME))
 
-img = cv2.imread('face1.jpg')
+img = cv2.imread('resources/face2.jpeg')
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
 print "Gray\n: {0}".format(gray)
 
-faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+faces = face_cascade.detectMultiScale(gray, 1.3, 4)
 
 print "Faces\n: {0}".format(faces)
 print "\n### Number of Faces: {0}\n".format(np.shape(faces)[0])
