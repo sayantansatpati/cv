@@ -67,7 +67,9 @@ def VJFindFace(frame):
 
 ####################################################################################################################
 #Track the faces found using CAMSHIFT algorithm
-def trackFace(allRoiPts, allRoiHist):        
+def trackFace(allRoiPts, allRoiHist):
+    print "[TRACK] allRoiPts: {0}\n".format(allRoiPts)
+    print "[TRACK] allRoiHist: {0}\n".format(allRoiHist)
     for k in range(0, TRACK):
         #read the frame and check if the frame is read. If these is some error reading the fram then return
         ret, frame = cap.read()
@@ -78,7 +80,7 @@ def trackFace(allRoiPts, allRoiHist):
         #convert the given frame to HSV color space
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         #For histogram of each window found, back project them on the current frame and track using CAMSHIFT
-        for roiHist in allRoiHist:            
+        for roiHist in allRoiHist:
             # Perform mean shift            
             backProj = cv2.calcBackProject([hsv], [0], roiHist, [0, 180], 1)
             # Apply cam shift to the back projection, convert the
@@ -136,6 +138,7 @@ def justShow():
 def main():
     #Include the global varibles for manipulation
     global cap
+    total_faces_detected = 0
     i=0
     #While frames are present in the video
     while(cap.isOpened()):                
@@ -155,6 +158,9 @@ def main():
                 return                
             #Capture the faces found in frame into a list                
             allRoiPts = VJFindFace(frame)
+
+            total_faces_detected += len(allRoiPts)
+            print "\n### Total Number of Faces Detected so far: {0}".format(total_faces_detected)
                                         
             #Check if faces are found in the given frame
             #If the face/faces are found 
